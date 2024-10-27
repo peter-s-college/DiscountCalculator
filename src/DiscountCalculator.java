@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class DiscountCalculator {
@@ -26,6 +27,25 @@ public class DiscountCalculator {
                 System.out.println("Line of class: " + classLine);
                 System.out.println("Line of last purchase: " + lastPurchaseLine);
 
+                // Step 2: Parse and validate customer name
+
+                // Split name line into first and last name with a space as defined being a valid format in the description
+                String[] nameParts = nameLine.split(" ");
+                // Logging for debugging, usin Arrays.toString() to convert array into a readable string format as trying to print the array as string would only print memory address.
+                System.out.println("The nameParts: " + Arrays.toString(nameParts));
+                // If the name length is not 2 mean there was not validly declared firstname and lastname, also the first name can be just letters in any case
+                // The last name may include numbers as well along the letters
+                if (nameParts.length != 2 || !nameParts[0].matches("[a-zA-Z]+") || !nameParts[1].matches("[a-zA-Z0-9]+")) {
+                    // Logging error for user
+                    System.out.println("Invalid name format for customer: " + nameLine);
+                    continue; // Skip the loop to next customer if validation fails
+                }
+                // Instantiate variables for the firstname and last name
+                String firstName = nameParts[0];
+                String lastName = nameParts[1];
+                // Logging for debugging
+                System.out.println("The firstName: " + firstName);
+                System.out.println("The lastName: " + lastName);
             }
 
             // Close resources to prevent memory issues
