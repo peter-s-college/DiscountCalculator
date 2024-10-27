@@ -46,6 +46,32 @@ public class DiscountCalculator {
                 // Logging for debugging
                 System.out.println("The firstName: " + firstName);
                 System.out.println("The lastName: " + lastName);
+
+                // Step 3: Parse and validate total purchase amount as a double
+
+                // Declare variable for totalPurchase
+                double totalPurchase;
+                // Using try to catch error in case totalPurchase is not a valid number
+                try {
+                    // Parsing totalPurchase to Double
+                    totalPurchase = Double.parseDouble(purchaseLine);
+                    // Logging for debugging
+                    System.out.println("The totalPurchase: " + totalPurchase);
+
+                    // Validating if the totalPurchase is not a negative number
+                    if (totalPurchase < 0) {
+                        // Logging error for user
+                        System.out.println("Purchase amount must be a positive value for customer: " + firstName + " " + lastName);
+                        // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
+                        continue;
+                    }
+                } catch (NumberFormatException e) { // Catching exception if the value is not a valid number
+                    // Logging error for user
+                    System.out.println("Invalid purchase amount format for customer: " + firstName + " " + lastName);
+                    // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
+                    continue;
+                }
+
             }
 
             // Close resources to prevent memory issues
