@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -12,6 +13,9 @@ public class DiscountCalculator {
             // Open input file containing customer data by defining the path and the name of the file
             File inputFile = new File("customers.txt");
             Scanner scanner = new Scanner(inputFile);
+
+            // Prepare output file to write customer discount data
+            PrintWriter writer = new PrintWriter("customerdiscount.txt");
 
             // Loop through all lines in the input file for each customer, using while as the number of loops in not known and it will iterate
             while (scanner.hasNextLine()) {
@@ -126,10 +130,15 @@ public class DiscountCalculator {
 
                 // Logging for debugging
                 System.out.println("The final discounted amount: " + finalValue);
+
+                // Write validated and calculated customer data to output file
+                writer.println(firstName + " " + lastName);
+                writer.println(finalValue);
             }
 
-            // Close resources to prevent memory issues
+            // Close resources to prevent memory issues and ensure file written correctly
             scanner.close();
+            writer.close();
 
         } catch (FileNotFoundException e) { // Catching error if customers.txt is not located at the path it was defined
             // Logging error for user
