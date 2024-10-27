@@ -120,6 +120,12 @@ public class DiscountCalculator {
                     // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
                     continue;
                 }
+
+                // Step 6: Calculate final value after discount by calling calculateDiscount method using validated data
+                double finalValue = calculateDiscount(totalPurchase, customerClass, lastPurchaseYear);
+
+                // Logging for debugging
+                System.out.println("The final discounted amount: " + finalValue);
             }
 
             // Close resources to prevent memory issues
@@ -129,5 +135,59 @@ public class DiscountCalculator {
             // Logging error for user
             System.out.println("File not found. Please ensure 'customers.txt' is in the correct location.");
         }
+    }
+
+    /**
+     * Calculates the discounted purchase value based on customer class and last purchase year.
+     *
+     * @param purchaseValue The original purchase amount
+     * @param customerClass The class of the customer (1, 2, or 3)
+     * @param lastPurchaseYear The year of the last purchase
+     * @return The final discounted value
+     */
+    public static double calculateDiscount(double purchaseValue, int customerClass, int lastPurchaseYear) {
+        int currentYear = 2024; // Current year for checking last purchase
+        double discountRate = 0.0; // Initialize discount rate
+
+        // Logging for debugging
+        System.out.println("The class is: " + customerClass);
+
+        // Determine discount based on customer class and last purchase year
+        if (customerClass == 1) {
+            // Logging for debugging
+            System.out.println("The class is validated as 1");
+            if (lastPurchaseYear == currentYear) {  // last purchase in 2024
+                discountRate = 0.30; // 30% discount
+            } else if (lastPurchaseYear >= currentYear - 5) {  // purchase within the last 5 years
+                discountRate = 0.20; // 20% discount
+            } else {  // no purchase in the last 5 years
+                discountRate = 0.10; // 10% discount
+            }
+        } else if (customerClass == 2) {
+            // Logging for debugging
+            System.out.println("The class is validated as 2");
+            if (lastPurchaseYear == currentYear) {  // last purchase in 2024
+                discountRate = 0.15; // 15% discount
+            } else if (lastPurchaseYear >= currentYear - 5) {  // purchase within the last 5 years
+                discountRate = 0.13; // 13% discount
+            } else {  // no purchase in the last 5 years
+                discountRate = 0.05; // 5% discount
+            }
+        } else if (customerClass == 3) {
+            // Logging for debugging
+            System.out.println("The class is validated as 3");
+            if (lastPurchaseYear == currentYear) { // last purchase in 2024
+                discountRate = 0.03; // 3% discount
+            } else { // purchase before 2024
+                discountRate = 0.0; // No discount
+            }
+        }
+
+        // Logging for debugging
+        System.out.println("Discount is: " + (discountRate * 100) + "%");
+        System.out.println("Total to pay: " + (purchaseValue * (1 - discountRate)));
+
+        // Apply discount to purchase value
+        return purchaseValue * (1 - discountRate);
     }
 }
