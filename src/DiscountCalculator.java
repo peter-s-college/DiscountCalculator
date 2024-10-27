@@ -72,6 +72,54 @@ public class DiscountCalculator {
                     continue;
                 }
 
+                // Step 4: Parse and validate class value as an integer (must be between 1 and 3)
+
+                // Declaring variable for customerClass
+                int customerClass;
+                // Using try to catch error in case totalPurchase is not a valid number
+                try {
+                    // Parsing totalPurchase to Integer
+                    customerClass = Integer.parseInt(classLine);
+                    // Logging for debugging
+                    System.out.println("The customerClass: " + customerClass);
+
+                    // Validating class if it is between 1 and 3 as required
+                    if (customerClass < 1 || customerClass > 3) {
+                        // Logging error for user
+                        System.out.println("Class must be between 1 and 3 for customer: " + firstName + " " + lastName);
+                        // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
+                        continue;
+                    }
+                } catch (NumberFormatException e) { // Catching exception if the value is not a valid number
+                    // Logging error for user
+                    System.out.println("Invalid class format for customer: " + firstName + " " + lastName);
+                    // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
+                    continue;
+                }
+
+                // Step 5: Parse and validate last purchase year (should be a reasonable year)
+                int lastPurchaseYear;
+                int currentYear = 2024; // Define current year
+                // Using try to catch error in case totalPurchase is not a valid number
+                try {
+                    // Parsing lastPurchaseYear to Integer
+                    lastPurchaseYear = Integer.parseInt(lastPurchaseLine);
+                    // Logging for debugging
+                    System.out.println("The lastPurchaseYear: " + lastPurchaseYear);
+
+                    // Validating lastPurchaseYear to be a reasonable date
+                    if (lastPurchaseYear < 1900 || lastPurchaseYear > currentYear) {
+                        // Logging error for user
+                        System.out.println("Last purchase year must be between 1900 and 2024" + " for customer: " + firstName + " " + lastName);
+                        // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
+                        continue;
+                    }
+                } catch (NumberFormatException e) { // Catching exception if the value is not a valid number
+                    // Logging error for user
+                    System.out.println("Invalid year format for last purchase of customer: " + firstName + " " + lastName);
+                    // Using continue to proceed with the loop parsing other available data (customer) after logging the error for the user
+                    continue;
+                }
             }
 
             // Close resources to prevent memory issues
